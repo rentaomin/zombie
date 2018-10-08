@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rtm.zombie.module.blog.core.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="com.rtm.zombie.module.blog.core.entity.User">
+        <result column="id" property="id" />
+        <result column="userName" property="userName" />
+        <result column="passWord" property="passWord" />
+        <result column="mobileNum" property="mobileNum" />
+        <result column="email" property="email" />
+        <result column="status" property="status" />
+        <result column="insertTime" property="insertTime" />
+        <result column="operateTime" property="operateTime" />
+    </resultMap>
+
+    <sql id="All_Column_List">
+		id, userName, passWord, mobileNum,email,status,insertTime,operateTime
+	</sql>
+
+    <sql id="Base_Column_List">
+		 userName, passWord, mobileNum,email,status,insertTime,operateTime
+	</sql>
+
+
+    <parameterMap id="user" type="com.rtm.zombie.module.blog.core.entity.User"/>
+
+    <select id="getUserList" resultType="com.rtm.zombie.module.blog.core.entity.User">
+      select
+        <include refid="All_Column_List"/>
+      from t_user
+    </select>
+
+
+    <insert id="save" parameterType="com.rtm.zombie.module.blog.core.entity.User"
+            useGeneratedKeys="true" keyColumn="id">
+        insert into t_user (
+         <include refid="Base_Column_List"/>
+        )
+        values (#{userName},#{passWord},#{mobileNum},#{email},#{status},#{insertTime},#{operateTime})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Integer" flushCache="true">
+        delete  from t_user
+        where id = #{id}
+    </delete>
+</mapper>
